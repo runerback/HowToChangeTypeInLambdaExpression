@@ -14,7 +14,7 @@ namespace HowToChangeTypeInLambdaExpression
 			}
 			set
 			{
-				//no enum validation here
+				//ignore enum validation here
 				this.Value1 = value.HasValue ? (int?)value.Value : null;
 			}
 		}
