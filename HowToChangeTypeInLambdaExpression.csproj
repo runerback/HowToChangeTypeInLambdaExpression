@@ -62,7 +62,9 @@
     <Compile Include="Visitors\PropertyVisitor.cs" />
     <Compile Include="Data\TypeInEnum.cs" />
     <Compile Include="TestClass.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
