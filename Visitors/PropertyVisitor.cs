@@ -28,14 +28,18 @@ namespace HowToChangeTypeInLambdaExpression
 		public PropertyInfo Visit(PropertyInfo property)
 		{
 			var sourceType = this.sourceType;
-			string classPropName = property.Name;
+			string propNameInClass = property.Name;
+
+			var propInInterface = sourceType.GetProperty(Prefix + propNameInClass, BindingFlags.Instance | BindingFlags.NonPublic);
+			if (propInInterface == null) //means not implement explicitly
+				return property;
 
 			//for simple, say Property in Interface and Class have same name
-			var classProp = sourceType.GetProperty(property.Name, BindingFlags.Instance | BindingFlags.Public);
-			if (classProp == null)
+			var propInClass = sourceType.GetProperty(property.Name, BindingFlags.Instance | BindingFlags.Public);
+			if (propInClass == null)
 				throw new InvalidOperationException(
-					string.Format("Cannot find property \"{0}\" in type \"{0}\"", classPropName, sourceType));
-			return classProp;
+					string.Format("Cannot find property \"{0}\" in type \"{0}\"", propNameInClass, sourceType));
+			return propInClass;
 		}
 	}
 }
