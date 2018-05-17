@@ -45,7 +45,21 @@ namespace HowToChangeTypeInLambdaExpression
 					var propInClass = PropertyVisitor<TSource>.Default.Visit(prop);
 
 					if (prop != propInClass)
-						return Expression.Property(parameter, propInClass);
+					{
+						var innerParam = Visit(node.Expression);
+						//add a convert to back to Interface property type
+						var propInClassExp = Expression.Property(innerParam, propInClass);
+						if (prop.PropertyType != propInClass.PropertyType)
+						{
+							var convertExp = Expression.Convert(propInClassExp, prop.PropertyType);
+							var exp = Visit(convertExp);
+							return exp;
+						}
+						else
+						{
+							return propInClassExp;
+						}
+					}
 				}
 			}
 			return base.VisitMember(node);
